@@ -1,38 +1,33 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
-import usersData from './UsersData'
+import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
-function UserRow(props) {
-  const user = props.user
-  const userLink = `/users/${user.id}`
+import axios from 'axios';
+import UserRow from './UsersRow';
 
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Banned' ? 'danger' :
-            'primary'
-  }
+// import { throwStatement } from '@babel/types';
 
-  return (
-    <tr key={user.id.toString()}>
-      <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-      <td><Link to={userLink}>{user.name}</Link></td>
-      <td>{user.registered}</td>
-      <td>{user.role}</td>
-      <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
-    </tr>
-  )
-}
 
 class Users extends Component {
 
+  constructor(){
+    super();
+    this.state = {
+       UsersData  : []
+    }
+  }
+  
+  componentDidMount(){
+      console.log("call the API from here...")
+      axios.get("https://practice-proj.herokuapp.com/api/users").then(res => {
+        const UsersData = res.data;
+        this.setState({UsersData : UsersData})
+      });
+  }
+
   render() {
-
-    const userList = usersData.filter((user) => user.id < 10)
-
+    // const userList =this.state.UsersData.filter((user) => user._id < 10)
+    console.log("call the render method users");
     return (
       <div className="animated fadeIn">
         <Row>
@@ -46,15 +41,14 @@ class Users extends Component {
                   <thead>
                     <tr>
                       <th scope="col">id</th>
-                      <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
-                      <th scope="col">status</th>
+                      <th scope="col">email</th>
+                      <th scope="col">firstname</th>
+                      <th scope="col">lastname</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {userList.map((user, index) =>
-                      <UserRow key={index} user={user}/>
+                    {this.state.UsersData.map((user, index) =>
+                      <UserRow users= {user}/>
                     )}
                   </tbody>
                 </Table>
