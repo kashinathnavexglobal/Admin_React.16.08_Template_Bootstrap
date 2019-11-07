@@ -16,7 +16,7 @@ export default {
       children: [
         {
           name: 'Add User',
-          url: '/base/breadcrumbs',
+          url: '/adduser',
           icon: 'icon-puzzle',
         },
         {
