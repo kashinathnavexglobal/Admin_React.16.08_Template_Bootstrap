@@ -25,6 +25,24 @@ export default {
           icon: 'icon-puzzle',
         }    
       ],
+    },
+    {
+      name: 'Blogs',
+      url: '/blogs',
+      icon: 'icon-speedometer',
+      badge: {
+        variant: 'info',
+        text: 'NEW',
+      },
+    },
+    {
+      name: 'Burger',
+      url: '/burger',
+      icon: 'icon-speedometer',
+      badge: {
+        variant: 'info',
+        text: 'NEW',
+      },
     }
   ],
 };
